@@ -1,9 +1,8 @@
 import crawler.{BestiaryCrawler, MonsterCrawler}
 
-object main extends App
-{
+object main extends App {
 
-  // Bestiary Crawler
+  // Bestiary Crawling
   var bestiaryCrawler = new BestiaryCrawler
   // Setup links to Crawl
   bestiaryCrawler.addLinkToCrawl("http://paizo.com/pathfinderRPG/prd/bestiary/monsterIndex.html")
@@ -14,10 +13,16 @@ object main extends App
   // Launch Crawling : fetch all monster links
   bestiaryCrawler.crawl()
 
-  // Monster Crawler
-  var monsterCrawler = new MonsterCrawler
-  monsterCrawler.links = bestiaryCrawler.monsterLinks
-  // Todo GM : Monster Crawling
-  // monsterCrawler.crawl()
+  println("Bestiary Crawling finished - found " + bestiaryCrawler.monsterLinks.size + " monster's link")
 
+  // Monster Crawling
+  var monsterCrawler = new MonsterCrawler(bestiaryCrawler.monsterLinks)
+  monsterCrawler.crawl()
+  println("Monster Crawling finished - " + monsterCrawler.monsters.size + " monsters obtained")
+  for (monster <- monsterCrawler.monsters) {
+    println("-----------")
+    println(monster.name)
+    println(monster.url)
+    println(monster.spells)
+  }
 }
