@@ -16,4 +16,7 @@ class Monster(val name: String, val url: String) extends Serializable {
     spells += spell
   }
 
+  override def toString: String = {
+    "------------------- \n" + name + "\n" + url + "\n" + spells
+  }
 }

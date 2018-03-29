@@ -34,15 +34,20 @@ class MonsterCrawler extends AbstractCrawler {
       // We split the page by h1, in order to process the pages with multiple monsters on it
       val h1Split = fullPage.toString.split("<h1 ")
 
-      for (h1Siblings <- h1Split) {
+      for (h1Siblings <- h1Split) { // For each monster section of the page
         if (h1Siblings.startsWith("id=\"" + name + "\"")) {
           var doc = Jsoup.parse(h1Siblings)
           doc.setBaseUri(baseUri) // Needed to use abs:href below
-          var spellsList = doc.select("a[href*=/spells/]").eachAttr("abs:href")
 
-          for (i <- 0 until spellsList.size()) {
-            monster.addSpell(spellsList.get(i))
+          var spellsSet = scala.collection.mutable.Set[String]() // Used to avoid duplicates
+
+          var links = doc.select("a[href*=/spells/]")
+          for (i <- 0 until links.size()) {
+            spellsSet += links.get(i).text() // Text of the spell
+            //            spellsSet += links.get(i).attr("abs:href") // Full link of the spell
           }
+
+          spellsSet.foreach(monster.addSpell(_))
 
         }
       }
@@ -51,8 +56,12 @@ class MonsterCrawler extends AbstractCrawler {
       case e: Exception => println(e)
     }
 
-    // We finally add the monster properly set up to the list
-    monsters.append(monster)
+    // We don't keep the monster if it has no spell
+    if (monster.spells.nonEmpty) {
+      // We finally add the monster properly set up to the list
+      monsters.append(monster)
+      //      println(monster)
+    }
   }
 
 }
