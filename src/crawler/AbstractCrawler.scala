@@ -11,11 +11,15 @@ abstract class AbstractCrawler {
   }
 
   def crawl(): Unit = {
-    println(links.size + " links to Crawl")
+    var nbLinks = links.size
+    println("Crawling " + nbLinks + " link(s) ...")
+    var i = 1
     for (link <- links) {
       crawlLink(link)
+      printf("\r %3d%%", i*100/nbLinks); // Percentage
+      i += 1
     }
-    println("Crawling finished")
+    println("\nCrawling finished")
   }
 
   protected def crawlLink(link: String)
