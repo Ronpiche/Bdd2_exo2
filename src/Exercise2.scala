@@ -1,3 +1,4 @@
+import battle.Battle
 import monsters._
 
 import scala.collection.mutable.ArrayBuffer
@@ -14,4 +15,8 @@ object Exercise2 extends App {
   }
   monsters.append(new BrutalWarlord)
   monsters.append(new Solar)
+
+  var battle = new Battle(monsters)
+
+  battle.start()
 }

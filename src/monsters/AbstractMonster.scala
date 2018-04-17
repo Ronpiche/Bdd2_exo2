@@ -13,6 +13,13 @@ abstract class AbstractMonster extends Serializable {
   var nbAttacks: Int = 1 // Number of attacks
 
   /**
+    * Action
+    */
+  def play(): Unit = {
+    println(name + " plays")
+  }
+
+  /**
     * Melee attack
     * @param opponent target
     */
@@ -40,7 +47,19 @@ abstract class AbstractMonster extends Serializable {
   /**
     * Monster is dead
     */
-  def die(): Unit = {
+  private def die(): Unit = {
     println(name + " died")
+  }
+
+  /**
+    * Tell if the current monster is alive or not
+    * @return true if alive, false else
+    */
+  def canPlay: Boolean = {
+    hp > 0
+  }
+
+  override def toString: String = {
+    name
   }
 }
