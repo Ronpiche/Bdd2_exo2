@@ -1,31 +1,22 @@
-package monsters
+class Solar extends Creature("Solar") {
 
-import utils.Dice
+  var hp = 363
 
-/**
-  * Solar
-  * http://www.d20pfsrd.com/bestiary/monster-listings/outsiders/angel/solar/
-  */
-class Solar extends AbstractMonster {
+  val hpMax = 363
 
-  override var armor: Int = 44
-  override var hp: Int = 363
-  override var damages: Int = 35
-  override var init: Int = 9
-  override var name: String = "Angel Solar"
-  override var meleeHit: Int = 22
-  var rangeHit: Int = 22
+  var armor = 44
 
-  /**
-    * Rnage attack
-    * @param opponent target
-    */
-  def rangeAttack(opponent: AbstractMonster): Unit = {
-    for (_ <- 0 to nbAttacks) {
-      Dice.roll() // Roll the hit chance
-      if (Dice.criticalSuccess || Dice.value + rangeHit > opponent.armor) {
-        opponent.hurt(damages)
-      }
-    }
-  }
+  override val regen = 15
+
+  //val name = "Solar"
+
+  override val damageReduction: Int = 15
+
+  var baseMeleeAttack = Array(4, 15, 18, 3, 6, 21, 0)
+
+  val alignment = "Good"
+
+  val creatureType = "Angel"
+
+
 }
