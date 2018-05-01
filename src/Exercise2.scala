@@ -67,7 +67,6 @@ object Exercise2 extends App {
 
     val graphBis = graph.vertices.collect()
 
-
     var done = false
     var turn = 1
 
@@ -131,5 +130,16 @@ object Exercise2 extends App {
 
     enemies.add(new OrcWorgRider() ,9)
     enemies.add(new BrutalWarlord())
+  }
+
+  def initSecondBattle(allies: Alignment, enemies: Alignment): Unit = {
+    allies.add(new Solar())
+    allies.add(new AstralDeva(), 5)
+    allies.add(new Planetar(), 2)
+    allies.add(new MovanicDeva(), 2)
+
+    enemies.add(new OrcBarbarian(), 200)
+    enemies.add(new GreatWyrm())
+    enemies.add(new AngelSlayer(), 10)
   }
 }

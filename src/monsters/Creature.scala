@@ -8,51 +8,32 @@ import scala.collection.mutable.ArrayBuffer
 abstract class Creature(val name:String, val id : Int = 1)  {
 
   val hpMax : Int
-  var hp : Int
-
+  var hp : In
   var armor : Int
-
   val creatureType: String
   val favouredEnemy: (String, Int) = ("",0)
-
   //val name : String
-
-
   ////ajoute capacités défensives
-
-
   val regen: Int = 0
-
   val damageReduction = 0
-
   val alignment : String
-
   var deadSince = -1
-
   def update(): Unit ={
     this.hp = math.min(this.hp+regen, hpMax)
     if (this.deadSince!= -1)
       deadSince += 1
   }
-
   var baseMeleeAttack : Array[Int]
 
-
   def diceThrow(throwNumber: Int, facesNumber: Int): Int ={
-
     val random = scala.util.Random
-
     var sum = 0
-
     var x = 0
-
     for ( x <- 1 to throwNumber){
       sum += random.nextInt(facesNumber)+1
     }
-
     sum
   }
-
 
   def isDead(): Boolean = {
     if (hp <= 0) true
@@ -69,15 +50,10 @@ abstract class Creature(val name:String, val id : Int = 1)  {
     var numberAttacksLeft = attack(0)
 
     while(!target.isDead() && numberAttacksLeft > 0) {
-
       val diceThrowPrc = diceThrow(1, 20)
-
       val prc = attack(1) + numberAttacksLeft * 5 + diceThrowPrc
-
       val targetName = target.name
-
       numberAttacksLeft -= 1
-
       if (prc >= target.armor || (this.name=="Orc Barbarian" && prc == 20)) {
         var dmg = attack(2) +  diceThrow(attack(3), attack(4))
         if (diceThrowPrc >= attack(5)) {
